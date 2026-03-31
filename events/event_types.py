@@ -1,4 +1,11 @@
-ADMISSION_APPROVED = "admission_approved"
-USER_REGISTERED = "user_registered"
-QUIZ_COMPLETED = "quiz_completed"
-PASSWORD_RESET_REQUESTED = "password_reset_requested"
+# qubitgyanpro\events\event_types.py
+
+class EventType:
+    ADMISSION_CREATED = "admission.created"
+    ADMISSION_APPROVED = "admission.approved"
+    ADMISSION_REJECTED = "admission.rejected"
+    ADMISSION_UNDER_REVIEW = "admission.under_review"
+
+    USER_REGISTERED = "user.registered"
+    PASSWORD_RESET_REQUESTED = "auth.password_reset_requested"
+    QUIZ_COMPLETED = "assessment.quiz_completed"

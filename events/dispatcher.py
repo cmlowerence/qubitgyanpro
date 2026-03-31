@@ -1,20 +1,25 @@
-from .handlers import admission_handlers, auth_handlers
+# qubitgyanpro\events\dispatcher.py
 
-EVENT_MAP = {
-    "admission_approved": [
-        admission_handlers.send_welcome_message,
-        admission_handlers.log_admission,
-    ],
-    "quiz_completed": [
-        auth_handlers.update_progress,
-    ],
-}
+import logging
+from typing import Callable, Dict, List
 
-def emit_event(event_type, data):
-    handlers = EVENT_MAP.get(event_type, [])
+logger = logging.getLogger(__name__)
+
+_EVENT_HANDLERS: Dict[str, List[Callable]] = {}
+
+
+def register_event(event_type: str, handler: Callable):
+    if event_type not in _EVENT_HANDLERS:
+        _EVENT_HANDLERS[event_type] = []
+
+    _EVENT_HANDLERS[event_type].append(handler)
+
+
+def dispatch_event(event_type: str, payload: dict):
+    handlers = _EVENT_HANDLERS.get(event_type, [])
 
     for handler in handlers:
         try:
-            handler(data)
-        except Exception as e:
-            print(f"Error in handler {handler.__name__}: {e}")
+            handler(payload)
+        except Exception:
+            logger.exception(f"[EVENT ERROR] {event_type} → {handler.__name__}")

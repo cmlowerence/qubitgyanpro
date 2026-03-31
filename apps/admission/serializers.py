@@ -1,4 +1,4 @@
-# qubitgyanpro\apps\admission\serializers.py
+# qubitgyanpro/apps\admission\serializers.py
 
 from rest_framework import serializers
 from django.contrib.auth.base_user import BaseUserManager
@@ -72,5 +72,4 @@ class ReviewAdmissionSerializer(serializers.Serializer):
             raise serializers.ValidationError({"rejection_reason": "Rejection reason is required."})
 
         return attrs
-    
     
