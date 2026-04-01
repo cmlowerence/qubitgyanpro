@@ -17,3 +17,5 @@ class EventType:
 
     LESSON_CREATED = "lesson.created"
     LESSON_UPDATED = "lesson.updated"
+
+    LESSON_COMPLETED = "lesson.completed"
