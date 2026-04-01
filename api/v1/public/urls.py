@@ -14,4 +14,5 @@ urlpatterns = [
     path('auth/request-reset/', RequestPasswordResetView.as_view(), name='auth-request-reset'),
     path('auth/verify-reset/', VerifyOtpAndResetPasswordView.as_view(), name='auth-verify-reset'),
     path('admission/', CreateAdmissionView.as_view(), name='create-admission'),
+    path('courses/', include('api.v1.public.course_urls')),
 ]

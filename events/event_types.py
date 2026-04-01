@@ -9,3 +9,11 @@ class EventType:
     USER_REGISTERED = "user.registered"
     PASSWORD_RESET_REQUESTED = "auth.password_reset_requested"
     QUIZ_COMPLETED = "assessment.quiz_completed"
+
+    COURSE_CREATED = "course.created"
+    COURSE_PUBLISHED = "course.published"
+
+    MODULE_CREATED = "module.created"
+
+    LESSON_CREATED = "lesson.created"
+    LESSON_UPDATED = "lesson.updated"

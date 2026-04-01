@@ -1,22 +1,28 @@
-# qubitgyanpro\apps\security\models.py
+# qubitgyanpro/apps/security/models.py
 
 import uuid
 from django.db import models
 
 
 class AdminAuditLog(models.Model):
-    """
-    Tracks critical admin actions (infra-level operations).
-    Immutable log for auditing and compliance.
-    """
 
     class Action(models.TextChoices):
         EVENT_RETRY = "EVENT_RETRY", "Event Retry"
         EVENT_BULK_RETRY = "EVENT_BULK_RETRY", "Bulk Event Retry"
 
+        COURSE_CREATED = "COURSE_CREATED", "Course Created"
+        COURSE_PUBLISHED = "COURSE_PUBLISHED", "Course Published"
+
+        MODULE_CREATED = "MODULE_CREATED", "Module Created"
+
+        LESSON_CREATED = "LESSON_CREATED", "Lesson Created"
+        LESSON_UPDATED = "LESSON_UPDATED", "Lesson Updated"
+
     class TargetType(models.TextChoices):
         EVENT = "EVENT", "Event"
-        # Future: USER, COURSE, PAYMENT, etc.
+        COURSE = "COURSE", "Course"
+        MODULE = "MODULE", "Module"
+        LESSON = "LESSON", "Lesson"
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
@@ -29,16 +35,15 @@ class AdminAuditLog(models.Model):
 
     action = models.CharField(max_length=50, choices=Action.choices)
 
-    # Target reference
     target_type = models.CharField(
         max_length=50,
         choices=TargetType.choices,
         null=True,
         blank=True
     )
+
     target_id = models.UUIDField(null=True, blank=True)
 
-    # Flexible metadata
     metadata = models.JSONField(default=dict, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -49,8 +54,9 @@ class AdminAuditLog(models.Model):
             models.Index(fields=["action"]),
             models.Index(fields=["target_type"]),
             models.Index(fields=["created_at"]),
+            models.Index(fields=["target_type", "target_id"]),
         ]
         ordering = ["-created_at"]
 
     def __str__(self):
-        return f"{self.action} | admin={self.admin_id} | target={self.target_id}"
+        return f"{self.action} | admin={self.admin_id} | target={self.target_type}:{self.target_id}"
