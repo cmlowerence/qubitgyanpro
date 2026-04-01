@@ -9,6 +9,3 @@ class CoreConfig(AppConfig):
 
     def ready(self):
         import apps.core.signals
-
-        from events import register_all_events
-        register_all_events()

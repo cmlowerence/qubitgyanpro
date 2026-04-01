@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'apps.revision',
     'apps.search',
     'apps.mock_tests',
+    'events.apps.EventsConfig',
     
 ]
 
@@ -142,6 +143,9 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'login': '10/min',
         'admissions': '20/hour',
+        'admissions_review': '30/hour',
+        'password_reset': '5/min',
+        'otp_verify': '10/min',
     },
     'DEFAULT_RENDERER_CLASSES': (
     'rest_framework.renderers.JSONRenderer',
